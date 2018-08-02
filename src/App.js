@@ -1,6 +1,8 @@
 import React from 'react'
+import { Route, Link } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI'
 import Bookshelf from './components/book_shelf';
+import Search from './components/search';
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -25,19 +27,27 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <Bookshelf title ='Currently Reading' books={this.state.results.filter((book) => this.testFilter(book, 0, 150))}/>
-              <Bookshelf title ='Want to Read' books={this.state.results.filter((book) => this.testFilter(book, 151, 400))}/>
-              <Bookshelf title ='Read' books={this.state.results.filter((book) => this.testFilter(book, 401, 10000))}/>
-            </div>
-            <div className="open-search">
-              <a onClick={() => console.log('open search')}>Add a book</a>
-            </div>
+
+        <Route exact path='/' render={() => (
+            <div className="list-books">
+              <div className="list-books-title">
+                <h1>MyReads</h1>
+              </div>
+              <div className="list-books-content">
+                <Bookshelf title ='Currently Reading' books={this.state.results.filter((book) => this.testFilter(book, 0, 150))}/>
+                <Bookshelf title ='Want to Read' books={this.state.results.filter((book) => this.testFilter(book, 151, 400))}/>
+                <Bookshelf title ='Read' books={this.state.results.filter((book) => this.testFilter(book, 401, 10000))}/>
+              </div>
+              <div className="open-search">
+                <Link to="/search">Add a book</Link>
+              </div>
           </div>
+        )} />
+
+        <Route path='/search' render={() => (
+          <Search />
+        )} />
+
       </div>
     )
   }
