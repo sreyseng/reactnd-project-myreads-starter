@@ -5,7 +5,7 @@ class BookListItem extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { book: props.book};
+    this.state = { book: props.book, shelfKey: props.shelfKey };
   }
 
   styleBookCover() {
@@ -18,6 +18,7 @@ class BookListItem extends Component {
     BooksAPI.update(this.state.book, shelf)
       .then((data) => {
         console.log(data)
+        this.props.onShelfChange();
       })
       .catch((error) => {
         console.log(error)
@@ -31,10 +32,10 @@ class BookListItem extends Component {
           <div className="book-top">
             <div className="book-cover" style={ this.styleBookCover() }></div>
             <div className="book-shelf-changer">
-              <select onChange={(event) => this.onShelfSelect(event.target.value)}>
+              <select onChange={(event) => this.onShelfSelect(event.target.value)} defaultValue={this.state.shelfKey? this.state.shelfKey: 'none'}>
                 <option value="move" disabled>Move to...</option>
-                <option value="currentlyReading">Currently Reading</option>
-                <option value="wantToRead">Want to Read</option>
+                <option value="currentlyReading" >Currently Reading</option>
+                <option value="wantToRead" >Want to Read</option>
                 <option value="read">Read</option>
                 <option value="none">None</option>
               </select>

@@ -5,9 +5,9 @@ import Bookshelf from './components/book_shelf';
 import Search from './components/search';
 import './App.css'
 
-const SHELF_CURRENT = 'currentlyReading';
-const SHELF_WANT = 'wantToRead';
-const SHELF_READ = 'read';
+const SHELF_CURRENT = {key: 'currentlyReading', value: 'Currently Reading'};
+const SHELF_WANT = {key: 'wantToRead', value: 'Want to Read'};
+const SHELF_READ = {key: 'read', value: 'Read'};
 
 class BooksApp extends React.Component {
   constructor(props) {
@@ -43,9 +43,9 @@ class BooksApp extends React.Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                <Bookshelf title ='Currently Reading' books={this.state.results.filter((book) => this.shelfFilter(book, SHELF_CURRENT))}/>
-                <Bookshelf title ='Want to Read' books={this.state.results.filter((book) => this.shelfFilter(book, SHELF_WANT))}/>
-                <Bookshelf title ='Read' books={this.state.results.filter((book) => this.shelfFilter(book, SHELF_READ))}/>
+                <Bookshelf onShelfChange={() => this.getShelves()} shelf = {SHELF_CURRENT} books={this.state.results.filter((book) => this.shelfFilter(book, SHELF_CURRENT.key))}/>
+                <Bookshelf onShelfChange={() => this.getShelves()} shelf = {SHELF_WANT} books={this.state.results.filter((book) => this.shelfFilter(book, SHELF_WANT.key))}/>
+                <Bookshelf onShelfChange={() => this.getShelves()} shelf ={SHELF_READ} books={this.state.results.filter((book) => this.shelfFilter(book, SHELF_READ.key))}/>
               </div>
               <div className="open-search">
                 <Link to="/search">Add a book</Link>
