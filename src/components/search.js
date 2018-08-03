@@ -25,6 +25,8 @@ class Search extends Component {
         BooksAPI.search(term).then((results) => {
         if (results && results.length > 0) {
           this.setState({results})
+        } else {
+          this.resetSearchResults();
         }
         }).catch(err => {
           console.log(err)
