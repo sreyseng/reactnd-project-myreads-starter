@@ -5,6 +5,10 @@ import Bookshelf from './components/book_shelf';
 import Search from './components/search';
 import './App.css'
 
+const SHELF_CURRENT = 'currentlyReading';
+const SHELF_WANT = 'wantToRead';
+const SHELF_READ = 'read';
+
 class BooksApp extends React.Component {
   constructor(props) {
     super(props);
@@ -13,15 +17,20 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-    BooksAPI.search('Virtual Reality').then((results) => {
+    this.getShelves();
+  }
+
+  getShelves() {
+    BooksAPI.getAll().then((results) => {
+      console.log(results);
       this.setState({results})
     }).catch(err => {
       console.log(err)
     })
   }
 
-  testFilter(book, rangeMin, rangeMax) {
-    return (book.pageCount >= rangeMin && book.pageCount <= rangeMax);
+  shelfFilter(book, shelf) {
+    return book.shelf === shelf;
   }
 
   render() {
@@ -34,9 +43,9 @@ class BooksApp extends React.Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                <Bookshelf title ='Currently Reading' books={this.state.results.filter((book) => this.testFilter(book, 0, 150))}/>
-                <Bookshelf title ='Want to Read' books={this.state.results.filter((book) => this.testFilter(book, 151, 400))}/>
-                <Bookshelf title ='Read' books={this.state.results.filter((book) => this.testFilter(book, 401, 10000))}/>
+                <Bookshelf title ='Currently Reading' books={this.state.results.filter((book) => this.shelfFilter(book, SHELF_CURRENT))}/>
+                <Bookshelf title ='Want to Read' books={this.state.results.filter((book) => this.shelfFilter(book, SHELF_WANT))}/>
+                <Bookshelf title ='Read' books={this.state.results.filter((book) => this.shelfFilter(book, SHELF_READ))}/>
               </div>
               <div className="open-search">
                 <Link to="/search">Add a book</Link>

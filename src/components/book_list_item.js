@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import * as BooksAPI from './../BooksAPI'
 
 class BookListItem extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = { book: props.book};
   }
 
@@ -13,6 +14,16 @@ class BookListItem extends Component {
       { width: 128, height: 193, backgroundColor: 'gray' }
   }
 
+  onShelfSelect(shelf) {
+    BooksAPI.update(this.state.book, shelf)
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   render() {
     return (
       <li>
@@ -20,7 +31,7 @@ class BookListItem extends Component {
           <div className="book-top">
             <div className="book-cover" style={ this.styleBookCover() }></div>
             <div className="book-shelf-changer">
-              <select>
+              <select onChange={(event) => this.onShelfSelect(event.target.value)}>
                 <option value="move" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
