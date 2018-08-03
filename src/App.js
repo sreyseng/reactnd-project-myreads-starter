@@ -23,7 +23,6 @@ class BooksApp extends React.Component {
   getShelves() {
     BooksAPI.getAll()
       .then((results) => {
-        console.log(results);
         this.setState({ results });
       })
       .catch((err) => {
