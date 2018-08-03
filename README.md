@@ -16,6 +16,10 @@ Explore react fundamentals utilizing React, ReactDOM, and React Router DOM by ad
 - `Search page` has a link to `Main page` with path `/`
 - Changes are reflected instantly with Book switch shelves (on both the `Main page` and `Search page`)
 
+## Demo
+
+![Application](demo/demo.gif)
+
 ## To start the project:
 
 - install all project dependencies with `npm install`
