@@ -28,8 +28,15 @@ class Search extends Component {
         }
         }).catch(err => {
           console.log(err)
+          this.resetSearchResults();
         })
+    } else {
+      this.resetSearchResults();
     }
+  }
+
+  resetSearchResults() {
+    this.setState({results: []});
   }
 
   isSaved(id) {
