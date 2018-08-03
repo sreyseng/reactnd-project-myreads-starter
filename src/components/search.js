@@ -32,6 +32,11 @@ class Search extends Component {
     }
   }
 
+  isSaved(id) {
+    const test = this.props.savedBooks.filter((savedBook) => savedBook.id === id);
+    return (test && test.length > 0)? test[0].shelf : null;
+  }
+
   render() {
     return (
       <div className="search-books">
@@ -49,7 +54,7 @@ class Search extends Component {
       </div>
       <div className="search-books-results">
         <ol className="books-grid">
-          {this.state.results.map((book) => <BookListItem key={book.id} book={book} />)}
+          {this.state.results.map((book) => (<BookListItem key={book.id} book={book} shelfKey={this.isSaved(book.id)} onShelfChange={this.props.onShelfChange} />))}
         </ol>
       </div>
     </div>
