@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as BooksAPI from './../BooksAPI'
+import * as BooksAPI from './../BooksAPI';
 
 class BookListItem extends Component {
   constructor(props) {
@@ -9,20 +9,20 @@ class BookListItem extends Component {
   }
 
   styleBookCover() {
-    return this.state.book.imageLinks ?
-      { width: 128, height: 193, backgroundImage: `url(${this.state.book.imageLinks.thumbnail})` }:
-      { width: 128, height: 193, backgroundColor: 'gray' }
+    return this.state.book.imageLinks
+      ? { width: 128, height: 193, backgroundImage: `url(${this.state.book.imageLinks.thumbnail})` }
+      : { width: 128, height: 193, backgroundColor: 'gray' };
   }
 
   onShelfSelect(shelf) {
     BooksAPI.update(this.state.book, shelf)
       .then((data) => {
-        console.log(data)
+        console.log(data);
         this.props.onShelfChange();
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
   }
 
   render() {
@@ -30,19 +30,25 @@ class BookListItem extends Component {
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={ this.styleBookCover() }></div>
+            <div className="book-cover" style={this.styleBookCover()} />
             <div className="book-shelf-changer">
-              <select onChange={(event) => this.onShelfSelect(event.target.value)} defaultValue={this.state.shelfKey? this.state.shelfKey: 'none'}>
-                <option value="move" disabled>Move to...</option>
-                <option value="currentlyReading" >Currently Reading</option>
-                <option value="wantToRead" >Want to Read</option>
+              <select
+                onChange={(event) => this.onShelfSelect(event.target.value)}
+                defaultValue={this.state.shelfKey ? this.state.shelfKey : 'none'}>
+                <option value="move" disabled>
+                  Move to...
+                </option>
+                <option value="currentlyReading">Currently Reading</option>
+                <option value="wantToRead">Want to Read</option>
                 <option value="read">Read</option>
                 <option value="none">None</option>
               </select>
             </div>
           </div>
           <div className="book-title">{this.state.book.title}</div>
-          <div className="book-authors">{this.state.book.authors && this.state.book.authors.join(', ')}</div>
+          <div className="book-authors">
+            {this.state.book.authors && this.state.book.authors.join(', ')}
+          </div>
         </div>
       </li>
     );
